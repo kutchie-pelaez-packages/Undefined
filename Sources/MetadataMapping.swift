@@ -2,7 +2,7 @@ import Logging
 
 private let logger = Logger(label: "Undefined")
 
-func log(message: String, metadata: [String: Any]?, file: String, function: String, line: UInt) {
+func log(message: String, with metadata: [String: Any]?, _ file: String, _ function: String, _ line: UInt) {
     logger.critical(
         "\(message)", metadata: metadata.map(loggerMetadata),
         file: file, function: function, line: line

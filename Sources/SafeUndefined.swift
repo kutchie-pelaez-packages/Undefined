@@ -1,39 +1,36 @@
 public func safeUndefined(
     message: @autoclosure () -> String,
-    metadata: [String: Any]? = nil,
+    metadata: @autoclosure () -> [String: Any]? = nil,
     file: String = #fileID,
     function: String = #function,
     line: UInt = #line
 ) {
     let message = message()
-    log(
-        message: message, metadata: metadata,
-        file: file, function: function, line: line
-    )
+    log(message: message, with: metadata(), file, function, line)
     assertionFailure(message)
 }
 
 public func safeUndefined<T>(
-    _ value: T,
+    _ value: @autoclosure () -> T,
     message: @autoclosure () -> String,
-    metadata: [String: Any]? = nil,
+    metadata: @autoclosure () -> [String: Any]? = nil,
     file: String = #fileID,
     function: String = #function,
     line: UInt = #line
 ) -> T {
     safeUndefined(
-        message: message(), metadata: metadata,
+        message: message(), metadata: metadata(),
         file: file, function: function, line: line
     )
 
-    return value
+    return value()
 }
 
 public func safeUndefinedIf<T>(
     _ condition: @autoclosure () -> Bool,
     fallback: @autoclosure () -> T,
     message: @autoclosure () -> String,
-    metadata: [String: Any]? = nil,
+    metadata: @autoclosure () -> [String: Any]? = nil,
     file: String = #fileID,
     function: String = #function,
     line: UInt = #line
@@ -43,7 +40,7 @@ public func safeUndefinedIf<T>(
     }
 
     return safeUndefined(
-        fallback(), message: message(), metadata: metadata,
+        fallback(), message: message(), metadata: metadata(),
         file: file, function: function, line: line
     )
 }
@@ -52,15 +49,14 @@ public func safeUndefinedIfNil<T>(
     _ value: @autoclosure () -> T?,
     fallback: @autoclosure () -> T,
     message: @autoclosure () -> String,
-    metadata: [String: Any]? = nil,
+    metadata: @autoclosure () -> [String: Any]? = nil,
     file: String = #fileID,
     function: String = #function,
     line: UInt = #line
 ) -> T {
     guard let value = value() else {
         return safeUndefined(
-            fallback(), message: message(),
-            metadata: metadata,
+            fallback(), message: message(), metadata: metadata(),
             file: file, function: function, line: line
         )
     }
