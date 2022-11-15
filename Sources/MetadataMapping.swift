@@ -36,7 +36,7 @@ private func mapKeyValue(key: String?, value: Any) -> (Logger.MetadataValue?, [K
             unsupportedValues.append(contentsOf: mappedUnsupportedValues)
         }
 
-        return (unsupportedValues.isEmpty ? nil : .dictionary(metadata), unsupportedValues)
+        return (metadata.isEmpty ? nil : .dictionary(metadata), unsupportedValues)
 
     case let array as [Any]:
         var metadataValues = [Logger.MetadataValue]()
