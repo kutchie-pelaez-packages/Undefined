@@ -25,7 +25,7 @@ public func undefined<T>(
 
 public func undefinedIf<T>(
     _ condition: @autoclosure () -> Bool,
-    fallback: @autoclosure () -> T,
+    value: @autoclosure () -> T,
     message: @autoclosure () -> String,
     metadata: @autoclosure () -> [String: Any]? = nil,
     file: String = #fileID,
@@ -33,7 +33,7 @@ public func undefinedIf<T>(
     line: UInt = #line
 ) -> T {
     guard condition() else {
-        return fallback()
+        return value()
     }
 
     return undefined(

@@ -28,7 +28,7 @@ public func safeUndefined<T>(
 
 public func safeUndefinedIf<T>(
     _ condition: @autoclosure () -> Bool,
-    fallback: @autoclosure () -> T,
+    value: @autoclosure () -> T,
     message: @autoclosure () -> String,
     metadata: @autoclosure () -> [String: Any]? = nil,
     file: String = #fileID,
@@ -36,11 +36,11 @@ public func safeUndefinedIf<T>(
     line: UInt = #line
 ) -> T {
     guard condition() else {
-        return fallback()
+        return value()
     }
 
     return safeUndefined(
-        fallback(), message: message(), metadata: metadata(),
+        value(), message: message(), metadata: metadata(),
         file: file, function: function, line: line
     )
 }
