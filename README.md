@@ -8,9 +8,10 @@ This package provides two functions `safeUndefined()` and `undefined()` which ar
 simply wrappers around `assertionFailure()` and `fatalError()` respectively. Each call  
 logs message with metadata to [swift-log](https://github.com/apple/swift-log)'s `Logger` with label `Undefined`.
 
-Here are different variants available for usage, `file`, `function` and `line` have  
-default values as constants; `metadata`'s (of type `[String: Any]`) leafes should conform to  
-`CustomStringConvertible` protocol in order to perform mapping to `swift-log`'s `Logger.Metadata`.
+Here are different variants available for usage, `file`, `function` and `line` have default  
+values as constants; `metadata`'s (of type `[String: Any]`) leafes should conform to  
+`CustomStringConvertible` protocol in order to perform mapping to `swift-log`'s `Logger.Metadata`, otherwise  
+all values that can't be converted wil be placed to the dictionary under `unsupportedValues` key.
 
 ### safeUndefined
 
