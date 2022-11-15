@@ -23,6 +23,22 @@ public func undefined<T>(
     )
 }
 
+public func undefinedIf(
+    _ condition: @autoclosure () -> Bool,
+    message: @autoclosure () -> String,
+    metadata: @autoclosure () -> [String: Any]? = nil,
+    file: String = #fileID,
+    function: String = #function,
+    line: UInt = #line
+) {
+    guard condition() else { return }
+
+    undefined(
+        message: message(), metadata: metadata(),
+        file: file, function: function, line: line
+    )
+}
+
 public func undefinedIf<T>(
     _ condition: @autoclosure () -> Bool,
     value: @autoclosure () -> T,
